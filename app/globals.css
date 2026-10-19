@@ -66,3 +66,23 @@ body {
     @apply text-xs font-semibold uppercase tracking-wider text-brand;
   }
 }
+
+/* Respect users who ask for less motion: stop looping animations and
+   collapse transitions so no essential information depends on motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-spin,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
