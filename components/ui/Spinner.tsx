@@ -22,3 +22,55 @@ export function LoadingBlock({ label }: { label: string }) {
     </div>
   );
 }
+
+/**
+ * Card-shaped placeholder that mirrors the SubscriptionCard layout so the grid
+ * keeps its dimensions while data loads (no layout shift on arrival).
+ */
+export function CardSkeleton() {
+  return (
+    <div
+      className="animate-pulse motion-reduce:animate-none rounded-xl border border-border bg-surface p-5"
+      aria-hidden="true"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-2">
+          <div className="h-4 w-32 rounded bg-border" />
+          <div className="h-3 w-20 rounded bg-border" />
+        </div>
+        <div className="h-6 w-16 rounded-full bg-border" />
+      </div>
+      <div className="mt-5 space-y-2">
+        <div className="h-2 w-full rounded bg-border" />
+        <div className="h-3 w-24 rounded bg-border" />
+      </div>
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <div className="h-3 w-28 rounded bg-border" />
+        <div className="h-8 w-24 rounded-lg bg-border" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Grid of card skeletons in the same layout as the subscription list, labelled
+ * for assistive technology via a live status region.
+ */
+export function CardSkeletonGrid({
+  count = 6,
+  label = "Loading subscriptions",
+}: {
+  count?: number;
+  label?: string;
+}) {
+  return (
+    <div role="status" aria-busy="true" aria-live="polite">
+      <span className="sr-only">{label}</span>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: count }).map((_, i) => (
+          <CardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}

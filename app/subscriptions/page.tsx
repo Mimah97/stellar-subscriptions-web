@@ -7,7 +7,6 @@ import { CommittedSpend } from "@/components/subscription/CommittedSpend";
 import { SubscriptionCard } from "@/components/subscription/SubscriptionCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
-import { LoadingBlock } from "@/components/ui/Spinner";
 import { RequireWallet } from "@/components/wallet/RequireWallet";
 
 export default function MySubscriptionsPage() {
@@ -32,7 +31,7 @@ function Subscriptions({ address }: { address: string }) {
   if (subs.error) {
     return <ErrorState error={subs.error} title="Couldn't load your subscriptions" onRetry={subs.reload} />;
   }
-  if (!subs.data) return <LoadingBlock label="Loading your subscriptions" />;
+  if (!subs.data) return <SubscriptionsSkeleton />;
 
   if (subs.data.length === 0) {
     return (
@@ -59,6 +58,43 @@ function Subscriptions({ address }: { address: string }) {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function SubscriptionsSkeleton() {
+  return (
+    <div className="space-y-6" role="status" aria-busy="true" aria-live="polite">
+      <span className="sr-only">Loading subscriptions</span>
+      <div aria-hidden="true" className="space-y-6">
+        <div className="card animate-pulse space-y-3">
+          <div className="h-4 w-40 rounded bg-border" />
+          <div className="h-8 w-32 rounded bg-border" />
+        </div>
+        <ul className="grid gap-4 lg:grid-cols-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <li key={i}>
+              <div className="card animate-pulse space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <div className="h-5 w-40 rounded bg-border" />
+                    <div className="h-3 w-24 rounded bg-border" />
+                  </div>
+                  <div className="h-6 w-16 rounded-full bg-border" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-3 w-full rounded bg-border" />
+                  <div className="h-2 w-full rounded-full bg-border" />
+                </div>
+                <div className="flex gap-2">
+                  <div className="h-9 w-24 rounded bg-border" />
+                  <div className="h-9 w-24 rounded bg-border" />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

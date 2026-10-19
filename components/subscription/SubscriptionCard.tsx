@@ -51,3 +51,39 @@ export function SubscriptionCard({ sub, onChanged }: { sub: Subscription; onChan
     </article>
   );
 }
+
+/**
+ * Card-shaped placeholder shown while subscriptions load. Mirrors the layout
+ * and spacing of {@link SubscriptionCard} so the grid does not shift when the
+ * real data arrives. Labelled for assistive technology.
+ */
+export function SubscriptionCardSkeleton() {
+  return (
+    <article
+      className="card space-y-5 p-5"
+      role="status"
+      aria-busy="true"
+      aria-label="Loading subscription"
+    >
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-1">
+          <div className="h-6 w-40 animate-pulse rounded bg-line" />
+          <div className="h-4 w-56 animate-pulse rounded bg-line" />
+        </div>
+        <div className="h-6 w-20 animate-pulse rounded-full bg-line" />
+      </header>
+
+      <div className="space-y-2">
+        <div className="h-2 w-full animate-pulse rounded-full bg-line" />
+        <div className="h-4 w-32 animate-pulse rounded bg-line" />
+      </div>
+
+      <div className="h-4 w-48 animate-pulse rounded bg-line" />
+
+      <footer className="flex flex-wrap items-start gap-3 border-t border-line pt-4">
+        <div className="h-9 w-24 animate-pulse rounded bg-line" />
+        <div className="h-9 w-24 animate-pulse rounded bg-line" />
+      </footer>
+    </article>
+  );
+}
