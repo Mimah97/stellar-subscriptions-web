@@ -4,6 +4,7 @@ import "./globals.css";
 import { NetworkNotice } from "@/components/layout/NetworkNotice";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 import { WalletProvider } from "@/components/wallet/WalletProvider";
 
 export const metadata: Metadata = {
@@ -28,17 +29,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <WalletProvider>
-          <div className="flex min-h-screen flex-col">
-            <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand focus:px-3 focus:py-2 focus:text-brand-fg">
-              Skip to content
-            </a>
-            <SiteHeader />
-            <NetworkNotice />
-            <main id="main" className="mx-auto w-full max-w-page flex-1 px-4 py-8 sm:px-6">
-              {children}
-            </main>
-            <SiteFooter />
-          </div>
+          <ToastProvider>
+            <div className="flex min-h-screen flex-col">
+              <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-brand focus:px-3 focus:py-2 focus:text-brand-fg">
+                Skip to content
+              </a>
+              <SiteHeader />
+              <NetworkNotice />
+              <main id="main" className="mx-auto w-full max-w-page flex-1 px-4 py-8 sm:px-6">
+                {children}
+              </main>
+              <SiteFooter />
+            </div>
+          </ToastProvider>
         </WalletProvider>
       </body>
     </html>
